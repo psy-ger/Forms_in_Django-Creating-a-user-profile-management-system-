@@ -1,0 +1,7 @@
+Django>=5.2
+Pillow
+# Optional: django-allauth for social auth
+django-allauth
+requests
+PyJWT
+cryptography
