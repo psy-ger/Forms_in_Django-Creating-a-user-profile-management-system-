@@ -1,0 +1,71 @@
+{% extends 'user_profile/base.html' %}
+{% block title %}Email addresses{% endblock %}
+{% block content %}
+<div class="card shadow-sm my-4">
+  <div class="card-body">
+    <h3 class="card-title mb-3">Email Addresses</h3>
+    <p>The following email addresses are associated with your account:</p>
+
+    <ul class="list-group mb-3">
+      {% for email in email_addresses %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            {% if email.primary %}
+              <strong>{{ email.email }}</strong>
+            {% else %}
+              {{ email.email }}
+            {% endif %}
+            {% if email.verified %}
+              <span class="badge bg-success ms-2">Verified</span>
+            {% else %}
+              <span class="badge bg-warning text-dark ms-2">Unverified</span>
+            {% endif %}
+          </div>
+          <div class="btn-group">
+            {% if not email.primary %}
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="set_primary">
+                <input type="hidden" name="email" value="{{ email.email }}">
+                <button class="btn btn-sm btn-outline-primary">Make Primary</button>
+              </form>
+            {% endif %}
+            <form method="post" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="resend">
+              <input type="hidden" name="email" value="{{ email.email }}">
+              <button class="btn btn-sm btn-outline-secondary">Re-send Verification</button>
+            </form>
+            <form method="post" class="d-inline">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="remove">
+              <input type="hidden" name="email" value="{{ email.email }}">
+              <button class="btn btn-sm btn-outline-danger">Remove</button>
+            </form>
+          </div>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No email addresses found.</li>
+      {% endfor %}
+    </ul>
+
+    <h4 class="mb-3">Add Email Address</h4>
+    <form method="post" class="row g-2">
+      {% csrf_token %}
+      <div class="col-auto">
+        {% if form.email %}
+          {{ form.email.label_tag }}
+          {{ form.email }}
+          {{ form.email.errors }}
+        {% else %}
+          <label for="id_email" class="form-label">Email:</label>
+          <input id="id_email" class="form-control" type="email" name="email" placeholder="Email address">
+        {% endif %}
+      </div>
+      <div class="col-auto align-self-end">
+        <button type="submit" class="btn btn-primary">Add Email</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'user_profile/base.html' %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<div class="card shadow-sm my-4">
+  <div class="card-body">
+    <h3 class="card-title mb-3">Create an account</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      {% for field in form %}
+        <div class="mb-3">
+          {{ field.label_tag }}
+          {{ field }}
+          {{ field.errors }}
+        </div>
+      {% endfor %}
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+        <a href="{% url 'account_login' %}" class="btn btn-outline-secondary">Already have an account?</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

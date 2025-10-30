@@ -1,0 +1,14 @@
+{% extends 'user_profile/base.html' %}
+{% block title %}Confirm email{% endblock %}
+{% block content %}
+<div class="card shadow-sm my-4">
+  <div class="card-body">
+    <h3 class="card-title mb-3">Confirm email</h3>
+    {% if confirmation %}
+      <p>Click the link sent to <strong>{{ confirmation.email_address }}</strong> to confirm your address. If you followed a confirmation link, this page will confirm it.</p>
+    {% else %}
+      <p>An email has been sent with instructions to confirm your address.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

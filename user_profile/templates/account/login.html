@@ -1,0 +1,43 @@
+{% extends 'user_profile/base.html' %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="card shadow-sm my-4">
+  <div class="card-body">
+    <h3 class="card-title mb-3">Log in</h3>
+    {% if form.errors %}
+      <div class="alert alert-danger">Please correct the errors below.</div>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="mb-3">
+        {{ form.login.label_tag }}
+        {{ form.login }}
+        {{ form.login.errors }}
+      </div>
+      <div class="mb-3">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+        {{ form.password.errors }}
+      </div>
+      {% if redirect_field_value %}
+        <input type="hidden" name="redirect_field_value" value="{{ redirect_field_value }}">
+      {% endif %}
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Log in</button>
+        <a href="{% url 'account_reset_password' %}" class="btn btn-outline-secondary">Forgot password?</a>
+      </div>
+    </form>
+
+    {% if socialaccount_providers %}
+      <hr>
+      <h5>Or sign in using</h5>
+      <div class="d-flex gap-2 mt-2">
+        {% for provider in socialaccount_providers %}
+          <a class="btn btn-outline-primary" href="{% provider_login_url provider.id %}">{{ provider.name }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

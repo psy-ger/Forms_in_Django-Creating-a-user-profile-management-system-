@@ -1,0 +1,10 @@
+{% extends 'user_profile/base.html' %}
+{% block title %}Signed out{% endblock %}
+{% block content %}
+<div class="card shadow-sm my-4">
+  <div class="card-body">
+    <h3 class="card-title mb-3">Signed out</h3>
+    <p>You have been signed out. <a href="{% url 'account_login' %}">Sign in again</a>.</p>
+  </div>
+</div>
+{% endblock %}

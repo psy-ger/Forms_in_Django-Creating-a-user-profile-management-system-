@@ -15,3 +15,20 @@
     </div>
   </div>
 {% endblock %}
+{% extends 'user_profile/base.html' %}
+{% block title %}Delete account{% endblock %}
+{% block content %}
+  <div class="card shadow-sm my-4">
+    <div class="card-body">
+      <h3 class="card-title mb-3">Delete account</h3>
+      <p>Are you sure you want to permanently delete your account? This action cannot be undone.</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="d-flex gap-2">
+          <button class="btn btn-danger" type="submit">Yes, delete my account</button>
+          <a class="btn btn-outline-secondary" href="{% url 'user_profile:profile' user.username %}">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
